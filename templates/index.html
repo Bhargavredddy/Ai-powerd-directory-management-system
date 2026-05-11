@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI File Organizer - Smart Directory Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>AI File Organizer</h1>
+                    <p>Intelligent Directory Management System</p>
+                </div>
+                <div class="theme-toggle">
+                    <button id="theme-btn" class="theme-btn" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="content-wrapper">
+                <!-- Left Panel - Controls -->
+                <aside class="control-panel">
+                    <div class="panel-section">
+                        <h2><i class="fas fa-folder-open"></i> Directory Selection</h2>
+                        
+                        <div class="input-group">
+                            <input type="text" id="dir-path" placeholder="Enter directory path..." class="input-field">
+                            <button id="browse-btn" class="btn btn-primary">
+                                <i class="fas fa-folder"></i> Browse
+                            </button>
+                            <input type="file" id="directory-picker" webkitdirectory directory multiple hidden>
+                        </div>
+                        <div class="info-note">
+                            <p>This app organizes folders accessible to the server. In a remote Codespace, local Windows folders like <code>Documents</code> or <code>Downloads</code> may not be visible.</p>
+                        </div>
+                        
+                        <div id="selected-info" class="info-box hidden">
+                            <div class="info-item">
+                                <span class="label">Path:</span>
+                                <span id="selected-path" class="value"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Files Found:</span>
+                                <span id="file-count" class="value">0</span>
+                            </div>
+                        </div>
+
+                        <div id="file-selection-section" class="panel-section hidden">
+                            <h2><i class="fas fa-list"></i> File Manager</h2>
+                            <div class="file-selection-summary">
+                                <span id="selected-file-count">0 selected</span>
+                                <small>Choose files from the directory list, or leave none selected to organize all files.</small>
+                            </div>
+                            <div class="file-actions">
+                                <button id="select-all-btn" class="btn btn-secondary">Select All</button>
+                                <button id="deselect-all-btn" class="btn btn-secondary">Clear Selection</button>
+                            </div>
+                            <div id="file-list" class="file-list">
+                                <div class="file-entry empty">
+                                    <i class="fas fa-inbox"></i>
+                                    <span>No files loaded yet.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="panel-section">
+                        <h2><i class="fas fa-cog"></i> Options</h2>
+                        
+                        <label class="checkbox">
+                            <input type="checkbox" id="skip-duplicates">
+                            <span class="checkmark"></span>
+                            <span class="label-text">Skip Duplicates</span>
+                            <span class="tooltip">Skip files with identical content</span>
+                        </label>
+                        
+                        <label class="checkbox">
+                            <input type="checkbox" id="cleanup-empty" checked>
+                            <span class="checkmark"></span>
+                            <span class="label-text">Clean Empty Folders</span>
+                            <span class="tooltip">Remove empty directories after restore</span>
+                        </label>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="panel-section">
+                        <h2><i class="fas fa-play"></i> Actions</h2>
+                        
+                        <button id="organize-btn" class="btn btn-primary btn-lg" disabled>
+                            <i class="fas fa-magic"></i>
+                            <span>Start Organizing</span>
+                        </button>
+                        
+                        <button id="restore-btn" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-history"></i>
+                            <span>Restore Files</span>
+                        </button>
+
+                        <button id="settings-btn" class="btn btn-tertiary btn-lg">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Edit Categories</span>
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="panel-section stats">
+                        <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+                        
+                        <div class="stat-item">
+                            <span class="stat-label">Status:</span>
+                            <span id="status" class="stat-value status-ready">Ready</span>
+                        </div>
+                        
+                        <div class="stat-item">
+                            <span class="stat-label">Progress:</span>
+                            <div class="progress-container">
+                                <div id="progress-bar" class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                                <span id="progress-text" class="progress-text">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Right Panel - Logs -->
+                <section class="log-panel">
+                    <div class="log-header">
+                        <h2><i class="fas fa-list"></i> Activity Log</h2>
+                        <div class="log-controls">
+                            <button id="clear-log-btn" class="btn-icon" title="Clear log">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button id="copy-log-btn" class="btn-icon" title="Copy log">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="log-container" class="log-container">
+                        <div class="log-entry empty">
+                            <i class="fas fa-inbox"></i>
+                            <span>Logs will appear here...</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Browse Modal -->
+        <!-- Categories Modal -->
+        <div id="categories-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Categories</h2>
+                    <button class="modal-close">&times;</button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="categories-grid" id="categories-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn btn-secondary modal-close">Close</button>
+                    <button id="save-categories-btn" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast hidden"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

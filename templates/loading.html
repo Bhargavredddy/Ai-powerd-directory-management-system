@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizing Files - AI File Organizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1433 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* Animated background elements */
+        .background-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.03;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: #FF4944;
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            background: #FFD93D;
+            bottom: -125px;
+            right: -125px;
+            animation-delay: 2s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            background: #FF6B35;
+            top: 50%;
+            right: -100px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0px, 0px); }
+            33% { transform: translate(30px, -30px); }
+            66% { transform: translate(-30px, 30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo i {
+            font-size: 60px;
+            background: linear-gradient(135deg, #FF4944, #FF6B35, #FFD93D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 73, 68, 0.3)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.6)); }
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 15px 0;
+            background: linear-gradient(135deg, #FF4944, #FFD93D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: text-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes text-glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 73, 68, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
+        }
+
+        p {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        /* Circular Progress */
+        .progress-circle-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .progress-circle {
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-bg-circle {
+            fill: none;
+            stroke: rgba(255, 107, 53, 0.1);
+            stroke-width: 8;
+        }
+
+        .progress-fill-circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 565.48;
+            stroke-dashoffset: 565.48;
+            animation: fill-circle 0.5s ease-out forwards;
+        }
+
+        @keyframes fill-circle {
+            to {
+                stroke-dashoffset: var(--dash-offset, 0);
+            }
+        }
+
+        .progress-circle-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .progress-percentage {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FF4944, #FFD93D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* Linear Progress Bar */
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF4944, #FF6B35, #FFD93D, #FF6B35, #FF4944);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0%;
+            animation: progress-pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        @keyframes progress-pulse {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 73, 68, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.8)); }
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        /* Log Container */
+        .log-section {
+            text-align: left;
+            margin-top: 30px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .log-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #FFD93D;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .log-header i {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            max-height: 200px;
+            overflow-y: auto;
+            color: #aaa;
+        }
+
+        .log-entry {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+            animation: slide-in 0.5s ease-out;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .log-entry.success {
+            color: #4CAF50;
+        }
+
+        .log-entry.error {
+            color: #FF4944;
+        }
+
+        .log-entry.warning {
+            color: #FFD93D;
+        }
+
+        .log-entry.info {
+            color: #FF6B35;
+        }
+
+        /* Scrollbar styling */
+        .log-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .log-container::-webkit-scrollbar-track {
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 10px;
+        }
+
+        .log-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #FF4944, #FF6B35);
+            border-radius: 10px;
+        }
+
+        .log-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #FF6B35, #FFD93D);
+        }
+
+        /* Status message */
+        .status-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #FFD93D;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #FFD93D;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Actions */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back {
+            background: rgba(255, 107, 53, 0.2);
+            color: #FF6B35;
+            border: 1px solid #FF6B35;
+        }
+
+        .btn-back:hover {
+            background: #FF6B35;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Completion animation */
+        .completion-container {
+            display: none;
+            text-align: center;
+        }
+
+        .completion-container.show {
+            display: block;
+            animation: scale-in 0.5s ease-out;
+        }
+
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .completion-icon {
+            font-size: 80px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounce 0.5s ease-out;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .completion-message {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .progress-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .progress-percentage {
+                font-size: 36px;
+            }
+
+            .log-section {
+                max-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-elements">
+        <div class="bg-element"></div>
+        <div class="bg-element"></div>
+        <div class="bg-element"></div>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-sparkles"></i>
+        </div>
+        <h1>Organizing Files</h1>
+        <p>AI is intelligently organizing your files...</p>
+
+        <!-- Circular Progress -->
+        <div class="progress-circle-container">
+            <div class="progress-circle">
+                <svg viewBox="0 0 200 200">
+                    <circle class="progress-bg-circle" cx="100" cy="100" r="90"></circle>
+                    <circle class="progress-fill-circle" id="progressCircle" cx="100" cy="100" r="90" 
+                            style="stroke: url(#circleGradient);"></circle>
+                    <defs>
+                        <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FF4944;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#FF6B35;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFD93D;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="progress-circle-gradient">
+                    <div class="progress-percentage" id="percentage">0%</div>
+                    <div class="progress-label">Complete</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Linear Progress Bar -->
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text">
+            <span id="filesProgress">0</span> / <span id="filesTotal">0</span> files organized
+        </div>
+
+        <!-- Status -->
+        <div class="status-message">
+            <div class="status-dot"></div>
+            <span id="statusText">Initializing...</span>
+        </div>
+
+        <!-- Logs -->
+        <div class="log-section">
+            <div class="log-header">
+                <i class="fas fa-history"></i>
+                Activity Log
+            </div>
+            <div class="log-container" id="logContainer"></div>
+        </div>
+
+        <!-- Completion Message (hidden initially) -->
+        <div class="completion-container" id="completionContainer">
+            <div class="completion-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="completion-message">Organization Complete!</div>
+            <p id="completionText"></p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-back" id="backBtn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const circumference = 2 * Math.PI * 90;
+        let isComplete = false;
+
+        function updateProgress(progress, total) {
+            const percentage = total > 0 ? Math.round((progress / total) * 100) : 0;
+            
+            // Update percentage text
+            document.getElementById('percentage').textContent = percentage + '%';
+            
+            // Update progress bars
+            const offset = circumference - (percentage / 100) * circumference;
+            document.getElementById('progressCircle').style.setProperty('--dash-offset', offset + 'px');
+            document.getElementById('progressBar').style.width = percentage + '%';
+            
+            // Update file count
+            document.getElementById('filesProgress').textContent = progress;
+            document.getElementById('filesTotal').textContent = total;
+        }
+
+        function addLog(message) {
+            const logContainer = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            
+            // Color code based on message content
+            if (message.includes('✅')) {
+                entry.classList.add('success');
+            } else if (message.includes('❌')) {
+                entry.classList.add('error');
+            } else if (message.includes('⚠️') || message.includes('⏭️')) {
+                entry.classList.add('warning');
+            } else {
+                entry.classList.add('info');
+            }
+            
+            entry.textContent = message;
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        async function fetchLogs() {
+            try {
+                const response = await fetch('/api/logs');
+                const data = await response.json();
+                
+                // Update progress
+                updateProgress(data.progress, data.total);
+                
+                // Update logs
+                const logContainer = document.getElementById('logContainer');
+                if (data.logs.length === 0 && logContainer.children.length === 0) {
+                    logContainer.innerHTML = '';
+                }
+                
+                // Add new logs
+                const existingLogs = Array.from(logContainer.querySelectorAll('.log-entry')).map(el => el.textContent);
+                data.logs.forEach(log => {
+                    if (!existingLogs.includes(log)) {
+                        addLog(log);
+                    }
+                });
+                
+                // Update status
+                if (data.organizing) {
+                    document.getElementById('statusText').textContent = 'Organizing in progress...';
+                } else if (data.progress > 0 && !isComplete) {
+                    isComplete = true;
+                    showCompletion(data.progress, data.total);
+                }
+                
+                return data.organizing;
+            } catch (error) {
+                console.error('Error fetching logs:', error);
+                return false;
+            }
+        }
+
+        function showCompletion(progress, total) {
+            const completionContainer = document.getElementById('completionContainer');
+            const completionText = document.getElementById('completionText');
+            
+            completionText.textContent = `Successfully organized ${progress} files!`;
+            completionContainer.classList.add('show');
+            document.getElementById('statusText').textContent = 'Complete!';
+        }
+
+        function goBack() {
+            window.location.href = '/';
+        }
+
+        // Poll for updates every 500ms
+        async function startPolling() {
+            while (true) {
+                const isOrganizing = await fetchLogs();
+                if (!isOrganizing && isComplete) {
+                    // Wait a bit before allowing back
+                    await new Promise(r => setTimeout(r, 1000));
+                    break;
+                }
+                await new Promise(r => setTimeout(r, 500));
+            }
+        }
+
+        // Start polling when page loads
+        window.addEventListener('load', startPolling);
+    </script>
+</body>
+</html>
