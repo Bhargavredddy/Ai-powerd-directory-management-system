@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+users.db
+instance/
+file_organizer.log
+test_dir/

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI File Organizer - Authentication</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+    <!-- AI Background -->
+    <div class="ai-background">
+        <canvas id="aiCanvas"></canvas>
+    </div>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <i class="fas fa-brain logo-icon"></i>
+                <h2>AI File Organizer</h2>
+                <p>Intelligently manage your directories</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Login Form -->
+            <form id="form-login" class="auth-form active" action="{{ url_for('login') }}" method="POST">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" onclick="switchTab('forgot-password')" class="forgot-link">Forgot Password?</a>
+                </div>
+                <button type="submit" class="auth-submit-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <a href="{{ url_for('login_google') }}" class="auth-google-btn">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo">
+                    Sign in with Google
+                </a>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="form-signup" class="auth-form" action="{{ url_for('signup') }}" method="POST">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required minlength="6">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-check-circle"></i>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required minlength="6">
+                </div>
+                <button type="submit" class="auth-submit-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <a href="{{ url_for('login_google') }}" class="auth-google-btn">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo">
+                    Sign up with Google
+                </a>
+            </form>
+
+            <!-- Forgot Password Form -->
+            <form id="form-forgot-password" class="auth-form" action="{{ url_for('forgot_password') }}" method="POST">
+                <p class="form-desc">Enter your email address and we'll reset your password.</p>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">
+                    <i class="fas fa-paper-plane"></i> Reset Password
+                </button>
+                <div class="form-options text-center" style="justify-content: center; margin-top: 15px;">
+                    <a href="#" onclick="switchTab('login')" class="forgot-link">Back to Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Update tabs
+            if(tabId === 'login' || tabId === 'signup') {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('tab-' + tabId).classList.add('active');
+            }
+
+            // Update forms
+            document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+            document.getElementById('form-' + tabId).classList.add('active');
+        }
+
+        // AI Background Animation Canvas
+        const canvas = document.getElementById('aiCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const properties = {
+            bgColor: 'rgba(10, 14, 39, 1)',
+            particleColor: 'rgba(99, 102, 241, 0.5)',
+            particleRadius: 3,
+            particleCount: 80,
+            particleMaxVelocity: 0.5,
+            lineLength: 150,
+            particleLife: 6
+        };
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.velocityX = Math.random() * (properties.particleMaxVelocity * 2) - properties.particleMaxVelocity;
+                this.velocityY = Math.random() * (properties.particleMaxVelocity * 2) - properties.particleMaxVelocity;
+                this.life = Math.random() * properties.particleLife * 60;
+            }
+
+            position() {
+                this.x + this.velocityX > canvas.width && this.velocityX > 0 || this.x + this.velocityX < 0 && this.velocityX < 0 ? this.velocityX *= -1 : this.velocityX;
+                this.y + this.velocityY > canvas.height && this.velocityY > 0 || this.y + this.velocityY < 0 && this.velocityY < 0 ? this.velocityY *= -1 : this.velocityY;
+                this.x += this.velocityX;
+                this.y += this.velocityY;
+            }
+
+            reDraw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, properties.particleRadius, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fillStyle = properties.particleColor;
+                ctx.fill();
+            }
+
+            reCalculateLife() {
+                if(this.life < 1){
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.velocityX = Math.random() * (properties.particleMaxVelocity * 2) - properties.particleMaxVelocity;
+                    this.velocityY = Math.random() * (properties.particleMaxVelocity * 2) - properties.particleMaxVelocity;
+                    this.life = Math.random() * properties.particleLife * 60;
+                }
+                this.life--;
+            }
+        }
+
+        function reDrawBackground() {
+            ctx.fillStyle = properties.bgColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawLines() {
+            let x1, y1, x2, y2, length, opacity;
+            for(let i in particles){
+                for(let j in particles){
+                    x1 = particles[i].x;
+                    y1 = particles[i].y;
+                    x2 = particles[j].x;
+                    y2 = particles[j].y;
+                    length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                    if(length < properties.lineLength){
+                        opacity = 1 - length / properties.lineLength;
+                        ctx.lineWidth = '0.5';
+                        ctx.strokeStyle = 'rgba(16, 185, 129, ' + opacity + ')';
+                        ctx.beginPath();
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
+                        ctx.closePath();
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function reDrawParticles() {
+            for(let i in particles){
+                particles[i].reCalculateLife();
+                particles[i].position();
+                particles[i].reDraw();
+            }
+        }
+
+        function loop() {
+            reDrawBackground();
+            reDrawParticles();
+            drawLines();
+            requestAnimationFrame(loop);
+        }
+
+        function init() {
+            for(let i = 0 ; i < properties.particleCount ; i++){
+                particles.push(new Particle);
+            }
+            loop();
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,17 +1,17 @@
 // Dark Mode Toggle
 const themeBtn = document.getElementById('theme-btn');
-const html = document.documentElement;
+const body = document.body;
 
 // Check for saved theme preference or default to light mode
 const savedTheme = localStorage.getItem('theme') || 'light';
 if (savedTheme === 'dark') {
-    html.classList.add('dark-mode');
+    body.classList.add('dark-mode');
     themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
 }
 
 themeBtn.addEventListener('click', () => {
-    html.classList.toggle('dark-mode');
-    const isNowDark = html.classList.contains('dark-mode');
+    body.classList.toggle('dark-mode');
+    const isNowDark = body.classList.contains('dark-mode');
     localStorage.setItem('theme', isNowDark ? 'dark' : 'light');
     themeBtn.innerHTML = isNowDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 });
@@ -44,6 +44,27 @@ const categoriesGrid = document.getElementById('categories-grid');
 const saveCategoriesBtn = document.getElementById('save-categories-btn');
 const modalCloseButtons = document.querySelectorAll('.modal-close');
 const directoryPicker = document.getElementById('directory-picker');
+
+// Loading Overlay UI
+const loadingOverlay = document.getElementById('loading-overlay');
+const loadingProgressCircle = document.getElementById('loading-progress-circle');
+const loadingPercentage = document.getElementById('loading-percentage');
+const loadingProgressBar = document.getElementById('loading-progress-bar');
+const loadingFilesProgress = document.getElementById('loading-files-progress');
+const loadingFilesTotal = document.getElementById('loading-files-total');
+const loadingStatusText = document.getElementById('loading-status-text');
+const loadingLogContainer = document.getElementById('loading-log-container');
+const loadingCompletionContainer = document.getElementById('loading-completion-container');
+const loadingCompletionText = document.getElementById('loading-completion-text');
+const loadingActionButtons = document.getElementById('loading-action-buttons');
+const loadingDoneBtn = document.getElementById('loading-done-btn');
+
+// Main AI Progress UI (Right Panel)
+const mainProgressContainer = document.getElementById('main-progress-container');
+const mainPercentage = document.getElementById('main-percentage');
+const mainProgressFill = document.getElementById('main-progress-fill');
+
+const CIRCUMFERENCE = 2 * Math.PI * 90;
 
 let selectedDirectory = null;
 let selectedDirectoryHandle = null;
@@ -224,6 +245,13 @@ function appendLog(message, level = 'info') {
     entry.innerHTML = `<span>${escapeHtml(message)}</span>`;
     logContainer.appendChild(entry);
     logContainer.scrollTop = logContainer.scrollHeight;
+
+    // Also append to loading modal log
+    const loadingEntry = document.createElement('div');
+    loadingEntry.className = `log-entry ${level}`;
+    loadingEntry.innerHTML = `<span>${escapeHtml(message)}</span>`;
+    loadingLogContainer.appendChild(loadingEntry);
+    loadingLogContainer.scrollTop = loadingLogContainer.scrollHeight;
 }
 
 function updateSelectedFileCount() {
@@ -293,10 +321,8 @@ organizeBtn.addEventListener('click', async () => {
         if (data.success) {
             updateStatus('organizing');
             showToast('Organization started...', 'info');
-            // Navigate to progress page
-            setTimeout(() => {
-                window.location.href = '/organize-progress';
-            }, 500);
+            showLoadingOverlay();
+            startPolling();
         } else {
             showToast(data.error, 'error');
             organizeBtn.disabled = false;
@@ -360,12 +386,14 @@ async function organizeLocalDirectory() {
 
             appendLog(`✅ ${fileEntry.name} → ${category}/`, 'success');
             completed += 1;
-            const percentage = Math.round((completed / total) * 100);
-            progressBar.querySelector('.progress-fill').style.width = `${percentage}%`;
-            progressText.textContent = `${percentage}%`;
+            updateLoadingProgress(completed, total);
+            
+            // Artificial delay to allow the AI progress graphic to animate smoothly
+            await new Promise(r => setTimeout(r, 100));
+            updateLoadingProgress(completed, total);
         }
 
-        showToast('Local organization complete.', 'success');
+        showLoadingCompletion(completed, total);
         updateStatus('ready');
     } catch (error) {
         console.error('Local organize error:', error);
@@ -400,6 +428,7 @@ restoreBtn.addEventListener('click', async () => {
         
         if (data.success) {
             updateStatus('organizing');
+            showLoadingOverlay(true);
             startPolling();
             showToast('Restore started...', 'info');
         } else {
@@ -425,19 +454,16 @@ async function updateLogs() {
             renderLogs(data.logs);
         }
         
-        // Update progress
         if (data.total > 0) {
-            const percentage = Math.round((data.progress / data.total) * 100);
-            progressBar.querySelector('.progress-fill').style.width = percentage + '%';
-            progressText.textContent = percentage + '%';
+            updateLoadingProgress(data.progress, data.total);
         }
         
-        if (!data.organizing) {
+        if (!data.organizing && data.progress > 0) {
             clearInterval(pollInterval);
             organizeBtn.disabled = false;
             restoreBtn.disabled = false;
             updateStatus('ready');
-            showToast('Operation complete!', 'success');
+            showLoadingCompletion(data.progress, data.total);
         }
     } catch (error) {
         console.error('Error updating logs:', error);
@@ -472,9 +498,61 @@ function renderLogs(logs) {
 }
 
 function updateStatus(status) {
-    statusLabel.textContent = status.charAt(0).toUpperCase() + status.slice(1);
-    statusLabel.className = 'stat-value status-' + status;
+    if(statusLabel) {
+        statusLabel.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        statusLabel.className = 'stat-value status-' + status;
+    }
 }
+
+// Loading Modal Controls
+function showLoadingOverlay(isRestore = false) {
+    loadingOverlay.classList.remove('hidden');
+    document.getElementById('loading-title').textContent = isRestore ? 'Restoring Files' : 'Organizing Files';
+    document.getElementById('loading-desc').textContent = isRestore ? 'Restoring files to their original locations...' : 'AI is intelligently organizing your files...';
+    loadingStatusText.textContent = 'Initializing...';
+    
+    // Reset progress
+    updateLoadingProgress(0, 0);
+    loadingLogContainer.innerHTML = '';
+    loadingCompletionContainer.classList.remove('show');
+    loadingActionButtons.classList.add('hidden');
+    
+    // Show main panel progress
+    if(mainProgressContainer) mainProgressContainer.classList.remove('hidden');
+}
+
+function updateLoadingProgress(progress, total) {
+    const percentage = total > 0 ? Math.round((progress / total) * 100) : 0;
+    
+    loadingPercentage.textContent = percentage + '%';
+    const offset = CIRCUMFERENCE - (percentage / 100) * CIRCUMFERENCE;
+    loadingProgressCircle.style.setProperty('--dash-offset', offset + 'px');
+    loadingProgressBar.style.width = percentage + '%';
+    
+    loadingFilesProgress.textContent = progress;
+    loadingFilesTotal.textContent = total;
+
+    // Update main panel progress
+    if(mainPercentage) mainPercentage.textContent = percentage + '%';
+    if(mainProgressFill) mainProgressFill.style.width = percentage + '%';
+
+    if (percentage > 0 && percentage < 100) {
+        loadingStatusText.textContent = 'In progress...';
+    }
+}
+
+function showLoadingCompletion(progress, total) {
+    loadingStatusText.textContent = 'Complete!';
+    loadingCompletionText.textContent = `Successfully processed ${progress} files!`;
+    loadingCompletionContainer.classList.add('show');
+    loadingActionButtons.classList.remove('hidden');
+    
+    if(mainPercentage) mainPercentage.textContent = '100% - Complete';
+}
+
+loadingDoneBtn.addEventListener('click', () => {
+    loadingOverlay.classList.add('hidden');
+});
 
 // Log Controls
 clearLogBtn.addEventListener('click', () => {

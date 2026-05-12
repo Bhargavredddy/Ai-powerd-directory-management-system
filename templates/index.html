@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🤖 AI File Organizer - Smart Directory Management</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -17,10 +17,19 @@
                     <h1>AI File Organizer</h1>
                     <p>Intelligent Directory Management System</p>
                 </div>
-                <div class="theme-toggle">
-                    <button id="theme-btn" class="theme-btn" title="Toggle Dark Mode">
-                        <i class="fas fa-moon"></i>
-                    </button>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="user-email">{{ user.email }}</span>
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="btn-logout" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                    <div class="theme-toggle">
+                        <button id="theme-btn" class="theme-btn" title="Toggle Dark Mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>
@@ -113,31 +122,13 @@
                         </button>
                     </div>
 
-                    <!-- Stats -->
-                    <div class="panel-section stats">
-                        <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
-                        
-                        <div class="stat-item">
-                            <span class="stat-label">Status:</span>
-                            <span id="status" class="stat-value status-ready">Ready</span>
-                        </div>
-                        
-                        <div class="stat-item">
-                            <span class="stat-label">Progress:</span>
-                            <div class="progress-container">
-                                <div id="progress-bar" class="progress-bar">
-                                    <div class="progress-fill"></div>
-                                </div>
-                                <span id="progress-text" class="progress-text">0%</span>
-                            </div>
-                        </div>
-                    </div>
+
                 </aside>
 
                 <!-- Right Panel - Logs -->
                 <section class="log-panel">
                     <div class="log-header">
-                        <h2><i class="fas fa-list"></i> Activity Log</h2>
+                        <h2><i class="fas fa-network-wired"></i> AI Activity Stream</h2>
                         <div class="log-controls">
                             <button id="clear-log-btn" class="btn-icon" title="Clear log">
                                 <i class="fas fa-trash"></i>
@@ -145,6 +136,19 @@
                             <button id="copy-log-btn" class="btn-icon" title="Copy log">
                                 <i class="fas fa-copy"></i>
                             </button>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Main Progress Bar -->
+                    <div id="main-progress-container" class="ai-progress-wrapper hidden">
+                        <div class="ai-progress-info">
+                            <span class="ai-progress-status"><i class="fas fa-brain"></i> Neural processing...</span>
+                            <span id="main-percentage" class="ai-progress-percent">0%</span>
+                        </div>
+                        <div class="ai-progress-track">
+                            <div id="main-progress-fill" class="ai-progress-fill">
+                                <div class="ai-progress-glow"></div>
+                            </div>
                         </div>
                     </div>
                     
@@ -182,8 +186,89 @@
 
         <!-- Toast Notification -->
         <div id="toast" class="toast hidden"></div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-container">
+                <div class="loading-logo ai-brain-container">
+                    <i class="fas fa-brain"></i>
+                    <div class="ai-scan-line"></div>
+                </div>
+                <h1 id="loading-title">Organizing Files</h1>
+                <p id="loading-desc">AI is intelligently organizing your files...</p>
+
+                <!-- Circular Progress -->
+                <div class="progress-circle-container">
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 200 200">
+                            <circle class="progress-bg-circle" cx="100" cy="100" r="90"></circle>
+                            <circle class="progress-fill-circle" id="loading-progress-circle" cx="100" cy="100" r="90" 
+                                    style="stroke: url(#circleGradient);"></circle>
+                            <defs>
+                                <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FF4944;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#FF6B35;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#FFD93D;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="progress-circle-gradient">
+                            <div class="progress-percentage" id="loading-percentage">0%</div>
+                            <div class="progress-label">Complete</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linear Progress Bar -->
+                <div class="loading-progress-bar-container">
+                    <div class="loading-progress-bar-fill" id="loading-progress-bar"></div>
+                </div>
+                <div class="loading-progress-text">
+                    <span id="loading-files-progress">0</span> / <span id="loading-files-total">0</span> files organized
+                </div>
+
+                <!-- Status -->
+                <div class="loading-status-message">
+                    <div class="loading-status-dot"></div>
+                    <span id="loading-status-text">Initializing...</span>
+                </div>
+
+                <!-- Logs -->
+                <div class="loading-log-section">
+                    <div class="loading-log-header">
+                        <i class="fas fa-history"></i>
+                        Activity Log
+                    </div>
+                    <div class="loading-log-container" id="loading-log-container"></div>
+                </div>
+
+                <!-- Completion Message -->
+                <div class="loading-completion-container" id="loading-completion-container">
+                    <div class="completion-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="completion-message">Organization Complete!</div>
+                    <p id="loading-completion-text"></p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="loading-action-buttons hidden" id="loading-action-buttons">
+                    <button class="btn btn-back" id="loading-done-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Done
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Animated background elements -->
+            <div class="loading-background-elements">
+                <div class="bg-element"></div>
+                <div class="bg-element"></div>
+                <div class="bg-element"></div>
+            </div>
+        </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}?v=3"></script>
 </body>
 </html>

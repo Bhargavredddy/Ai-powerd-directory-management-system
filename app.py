@@ -1,4 +1,11 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from authlib.integrations.flask_client import OAuth
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer
+from dotenv import load_dotenv
 from pathlib import Path
 import os
 import shutil
@@ -13,8 +20,52 @@ import magic
 from datetime import datetime
 import threading
 
+# Load environment variables
+load_dotenv()
+
 app = Flask(__name__)
 app.secret_key = 'ai-file-organizer-secret-2024'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Mail Configuration
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'True').lower() in ['true', '1', 't']
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
+mail = Mail(app)
+serializer = URLSafeTimedSerializer(app.secret_key)
+
+# Google OAuth Configuration
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.environ.get('GOOGLE_CLIENT_ID'),
+    client_secret=os.environ.get('GOOGLE_CLIENT_SECRET'),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'}
+)
+
+db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=True) # Nullable for Google auth
+    auth_provider = db.Column(db.String(50), default='local') # To track login method
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Initialize database
+with app.app_context():
+    db.create_all()
 
 logging.basicConfig(filename='file_organizer.log', level=logging.INFO, 
                     format='%(asctime)s - %(message)s')
@@ -126,15 +177,142 @@ def add_log(msg):
     org_state['logs'].append(log_entry)
     logging.info(msg)
 
-@app.route('/')
-def index():
-    return render_template('index.html', categories=list(CATEGORIES.keys()))
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        remember = True if request.form.get('remember') else False
 
-@app.route('/organize-progress')
-def organize_progress():
-    return render_template('loading.html')
+        user = User.query.filter_by(email=email).first()
+
+        if not user or user.auth_provider != 'local' or not check_password_hash(user.password, password):
+            flash('Please check your login details and try again.', 'error')
+            return redirect(url_for('login'))
+
+        login_user(user, remember=remember)
+        return redirect(url_for('index'))
+
+    return render_template('auth.html')
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if password != confirm_password:
+        flash('Passwords do not match!', 'error')
+        return redirect(url_for('login'))
+
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        flash('Email address already exists', 'error')
+        return redirect(url_for('login'))
+
+    new_user = User(email=email, password=generate_password_hash(password, method='pbkdf2:sha256'))
+    db.session.add(new_user)
+    db.session.commit()
+
+    flash('Account created successfully! Please login.', 'success')
+    return redirect(url_for('login'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+@app.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    email = request.form.get('email')
+    user = User.query.filter_by(email=email).first()
+    if user:
+        token = serializer.dumps(email, salt='password-reset-salt')
+        reset_url = url_for('reset_password', token=token, _external=True)
+        
+        try:
+            msg = Message("Password Reset Request", 
+                          sender=app.config['MAIL_USERNAME'], 
+                          recipients=[email])
+            msg.body = f"Please click the following link to reset your password: {reset_url}\n\nIf you did not make this request, simply ignore this email."
+            mail.send(msg)
+            flash('A password reset link has been sent to your email.', 'info')
+        except Exception as e:
+            logging.error(f"Failed to send email: {e}")
+            flash('Failed to send email. Please check your SMTP configuration in .env.', 'error')
+    else:
+        flash('If that email exists in our system, a password reset link has been sent.', 'info')
+    return redirect(url_for('login'))
+
+@app.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    try:
+        email = serializer.loads(token, salt='password-reset-salt', max_age=3600) # 1 hour expiry
+    except:
+        flash('The password reset link is invalid or has expired.', 'error')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        if password != confirm_password:
+            flash('Passwords do not match.', 'error')
+            return redirect(url_for('reset_password', token=token))
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            user.password = generate_password_hash(password, method='pbkdf2:sha256')
+            db.session.commit()
+            flash('Your password has been updated! You can now log in.', 'success')
+            return redirect(url_for('login'))
+
+    return render_template('reset_password.html', token=token)
+
+@app.route('/login/google')
+def login_google():
+    redirect_uri = url_for('authorize_google', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route('/login/google/authorize')
+def authorize_google():
+    try:
+        token = google.authorize_access_token()
+        resp = google.get('https://openidconnect.googleapis.com/v1/userinfo')
+        user_info = resp.json()
+        email = user_info['email']
+    except Exception as e:
+        logging.error(f"Google Auth failed: {e}")
+        flash('Failed to authenticate with Google. Please make sure your Client Secret is in .env.', 'error')
+        return redirect(url_for('login'))
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        # Create a new user for this Google account
+        user = User(email=email, auth_provider='google')
+        db.session.add(user)
+        db.session.commit()
+    elif user.auth_provider == 'local':
+        # If they already signed up manually, maybe link the accounts
+        user.auth_provider = 'google'
+        db.session.commit()
+
+    login_user(user)
+    return redirect(url_for('index'))
+
+@app.route('/')
+@login_required
+def index():
+    return render_template('index.html', categories=list(CATEGORIES.keys()), user=current_user)
 
 @app.route('/api/select-directory', methods=['POST'])
+@login_required
 def select_directory():
     data = request.json
     directory = data.get('path')
@@ -172,6 +350,7 @@ def select_directory():
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/api/browser', methods=['POST'])
+@login_required
 def browser():
     data = request.json or {}
     rel_path = data.get('path', '')
@@ -201,6 +380,7 @@ def browser():
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/api/organize', methods=['POST'])
+@login_required
 def organize():
     if org_state['organizing']:
         return jsonify({'success': False, 'error': 'Organization already in progress'})
@@ -277,6 +457,7 @@ def organize():
     return jsonify({'success': True, 'message': 'Organization started'})
 
 @app.route('/api/restore', methods=['POST'])
+@login_required
 def restore():
     if org_state['organizing']:
         return jsonify({'success': False, 'error': 'Organization in progress'})
@@ -340,6 +521,7 @@ def restore():
     return jsonify({'success': True, 'message': 'Restore started'})
 
 @app.route('/api/logs')
+@login_required
 def get_logs():
     return jsonify({
         'logs': org_state['logs'],
@@ -350,10 +532,12 @@ def get_logs():
     })
 
 @app.route('/api/categories', methods=['GET'])
+@login_required
 def get_categories():
     return jsonify(CATEGORIES)
 
 @app.route('/api/categories', methods=['POST'])
+@login_required
 def update_categories():
     data = request.json
     global CATEGORIES

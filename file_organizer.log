@@ -280,3 +280,259 @@
 2026-05-11 15:01:25,732 -  * Debugger is active!
 2026-05-11 15:01:25,733 -  * Debugger PIN: 392-100-421
 2026-05-11 15:01:57,204 - 127.0.0.1 - - [11/May/2026 15:01:57] "HEAD / HTTP/1.1" 200 -
+2026-05-11 21:15:03,431 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.155.184.60:5000
+2026-05-11 21:15:03,431 - [33mPress CTRL+C to quit[0m
+2026-05-11 21:15:03,434 -  * Restarting with stat
+2026-05-11 21:15:06,552 -  * Debugger is active!
+2026-05-11 21:15:06,565 -  * Debugger PIN: 119-502-608
+2026-05-11 21:30:28,423 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 21:30:28,811 -  * Restarting with stat
+2026-05-11 21:30:32,531 -  * Debugger is active!
+2026-05-11 21:30:32,535 -  * Debugger PIN: 119-502-608
+2026-05-11 21:43:03,556 - 127.0.0.1 - - [11/May/2026 21:43:03] "GET / HTTP/1.1" 200 -
+2026-05-11 21:43:03,877 - 127.0.0.1 - - [11/May/2026 21:43:03] "GET /static/css/style.css?v=2 HTTP/1.1" 200 -
+2026-05-11 21:43:03,985 - 127.0.0.1 - - [11/May/2026 21:43:03] "GET /static/js/app.js?v=2 HTTP/1.1" 200 -
+2026-05-11 21:43:04,311 - 127.0.0.1 - - [11/May/2026 21:43:04] "GET /api/logs HTTP/1.1" 200 -
+2026-05-11 21:45:13,761 - 127.0.0.1 - - [11/May/2026 21:45:13] "GET / HTTP/1.1" 200 -
+2026-05-11 21:45:13,812 - 127.0.0.1 - - [11/May/2026 21:45:13] "[36mGET /static/css/style.css?v=2 HTTP/1.1[0m" 304 -
+2026-05-11 21:45:14,007 - 127.0.0.1 - - [11/May/2026 21:45:14] "GET /static/js/app.js?v=3 HTTP/1.1" 200 -
+2026-05-11 21:45:14,332 - 127.0.0.1 - - [11/May/2026 21:45:14] "GET /api/logs HTTP/1.1" 200 -
+2026-05-11 21:48:30,364 - 127.0.0.1 - - [11/May/2026 21:48:30] "GET / HTTP/1.1" 200 -
+2026-05-11 21:48:30,409 - 127.0.0.1 - - [11/May/2026 21:48:30] "[36mGET /static/css/style.css?v=2 HTTP/1.1[0m" 304 -
+2026-05-11 21:48:30,629 - 127.0.0.1 - - [11/May/2026 21:48:30] "[36mGET /static/js/app.js?v=3 HTTP/1.1[0m" 304 -
+2026-05-11 21:48:30,964 - 127.0.0.1 - - [11/May/2026 21:48:30] "GET /api/logs HTTP/1.1" 200 -
+2026-05-11 21:52:14,512 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 21:52:15,468 -  * Restarting with stat
+2026-05-11 21:52:28,448 -  * Debugger is active!
+2026-05-11 21:52:28,458 -  * Debugger PIN: 119-502-608
+2026-05-11 21:52:52,790 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 21:52:53,381 -  * Restarting with stat
+2026-05-11 21:52:59,372 -  * Debugger is active!
+2026-05-11 21:52:59,376 -  * Debugger PIN: 119-502-608
+2026-05-11 21:53:03,445 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 21:53:04,024 -  * Restarting with stat
+2026-05-11 21:53:10,002 -  * Debugger is active!
+2026-05-11 21:53:10,010 -  * Debugger PIN: 119-502-608
+2026-05-11 21:53:35,326 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 21:53:35,919 -  * Restarting with stat
+2026-05-11 21:53:42,711 -  * Debugger is active!
+2026-05-11 21:53:42,721 -  * Debugger PIN: 119-502-608
+2026-05-11 21:57:08,106 - 127.0.0.1 - - [11/May/2026 21:57:08] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-11 21:57:08,137 - 127.0.0.1 - - [11/May/2026 21:57:08] "GET /login?next=/ HTTP/1.1" 200 -
+2026-05-11 21:57:08,541 - 127.0.0.1 - - [11/May/2026 21:57:08] "GET /static/css/auth.css HTTP/1.1" 200 -
+2026-05-11 21:57:47,521 - 127.0.0.1 - - [11/May/2026 21:57:47] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2026-05-11 21:57:47,543 - 127.0.0.1 - - [11/May/2026 21:57:47] "GET /login HTTP/1.1" 200 -
+2026-05-11 21:57:47,622 - 127.0.0.1 - - [11/May/2026 21:57:47] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 21:57:59,969 - 127.0.0.1 - - [11/May/2026 21:57:59] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-11 21:57:59,996 - 127.0.0.1 - - [11/May/2026 21:57:59] "GET / HTTP/1.1" 200 -
+2026-05-11 21:58:00,099 - 127.0.0.1 - - [11/May/2026 21:58:00] "GET /static/css/style.css?v=2 HTTP/1.1" 200 -
+2026-05-11 21:58:00,411 - 127.0.0.1 - - [11/May/2026 21:58:00] "[36mGET /static/js/app.js?v=3 HTTP/1.1[0m" 304 -
+2026-05-11 21:58:00,768 - 127.0.0.1 - - [11/May/2026 21:58:00] "GET /api/logs HTTP/1.1" 200 -
+2026-05-11 21:58:08,493 - 127.0.0.1 - - [11/May/2026 21:58:08] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-11 21:58:08,801 - 127.0.0.1 - - [11/May/2026 21:58:08] "GET /login HTTP/1.1" 200 -
+2026-05-11 21:58:09,158 - 127.0.0.1 - - [11/May/2026 21:58:09] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 21:58:16,496 - 127.0.0.1 - - [11/May/2026 21:58:16] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-11 21:58:16,522 - 127.0.0.1 - - [11/May/2026 21:58:16] "GET /login HTTP/1.1" 200 -
+2026-05-11 21:58:16,983 - 127.0.0.1 - - [11/May/2026 21:58:16] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 21:58:36,301 - 127.0.0.1 - - [11/May/2026 21:58:36] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-11 21:58:36,311 - 127.0.0.1 - - [11/May/2026 21:58:36] "GET /login HTTP/1.1" 200 -
+2026-05-11 21:58:36,706 - 127.0.0.1 - - [11/May/2026 21:58:36] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 21:58:46,762 - 127.0.0.1 - - [11/May/2026 21:58:46] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-11 21:58:46,775 - 127.0.0.1 - - [11/May/2026 21:58:46] "GET / HTTP/1.1" 200 -
+2026-05-11 21:58:47,167 - 127.0.0.1 - - [11/May/2026 21:58:47] "[36mGET /static/css/style.css?v=2 HTTP/1.1[0m" 304 -
+2026-05-11 21:58:47,182 - 127.0.0.1 - - [11/May/2026 21:58:47] "[36mGET /static/js/app.js?v=3 HTTP/1.1[0m" 304 -
+2026-05-11 21:58:47,425 - 127.0.0.1 - - [11/May/2026 21:58:47] "GET /api/logs HTTP/1.1" 200 -
+2026-05-11 22:01:38,200 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 22:01:38,833 -  * Restarting with stat
+2026-05-11 22:01:44,856 -  * Debugger is active!
+2026-05-11 22:01:44,860 -  * Debugger PIN: 119-502-608
+2026-05-11 23:04:26,177 - 127.0.0.1 - - [11/May/2026 23:04:26] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-11 23:04:26,386 - 127.0.0.1 - - [11/May/2026 23:04:26] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:04:26,493 - 127.0.0.1 - - [11/May/2026 23:04:26] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:04:28,229 - 127.0.0.1 - - [11/May/2026 23:04:28] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:04:28,259 - 127.0.0.1 - - [11/May/2026 23:04:28] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:04:38,929 - Failed to send email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-367bee19a2esm3121400a91.14 - gsmtp')
+2026-05-11 23:04:38,940 - 127.0.0.1 - - [11/May/2026 23:04:38] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-11 23:04:38,947 - 127.0.0.1 - - [11/May/2026 23:04:38] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:04:39,298 - 127.0.0.1 - - [11/May/2026 23:04:39] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:06:41,897 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-11 23:06:41,897 - [33mPress CTRL+C to quit[0m
+2026-05-11 23:06:41,899 -  * Restarting with stat
+2026-05-11 23:06:44,694 -  * Debugger is active!
+2026-05-11 23:06:44,697 -  * Debugger PIN: 119-502-608
+2026-05-11 23:07:16,619 - 127.0.0.1 - - [11/May/2026 23:07:16] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:07:16,684 - 127.0.0.1 - - [11/May/2026 23:07:16] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:07:38,592 - Failed to send email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c8267688fe2sm12860719a12.9 - gsmtp')
+2026-05-11 23:07:38,594 - 127.0.0.1 - - [11/May/2026 23:07:38] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-11 23:07:38,608 - 127.0.0.1 - - [11/May/2026 23:07:38] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:07:38,969 - 127.0.0.1 - - [11/May/2026 23:07:38] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:07:58,357 - Failed to send email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-83965945c1bsm21760137b3a.15 - gsmtp')
+2026-05-11 23:07:58,359 - 127.0.0.1 - - [11/May/2026 23:07:58] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-11 23:07:58,366 - 127.0.0.1 - - [11/May/2026 23:07:58] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:07:58,725 - 127.0.0.1 - - [11/May/2026 23:07:58] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:08:02,280 - 127.0.0.1 - - [11/May/2026 23:08:02] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:08:02,609 - 127.0.0.1 - - [11/May/2026 23:08:02] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:08:30,647 - Failed to send email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-83967dbf67fsm21444942b3a.47 - gsmtp')
+2026-05-11 23:08:30,648 - 127.0.0.1 - - [11/May/2026 23:08:30] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-11 23:08:30,658 - 127.0.0.1 - - [11/May/2026 23:08:30] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:08:31,050 - 127.0.0.1 - - [11/May/2026 23:08:31] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:08:31,051 - 127.0.0.1 - - [11/May/2026 23:08:31] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:20:34,450 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 23:20:34,541 -  * Detected change in 'C:\\Users\\plaks\\Ai-powerd-directory-management-system\\app.py', reloading
+2026-05-11 23:20:34,886 -  * Restarting with stat
+2026-05-11 23:23:26,790 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-11 23:23:26,791 - [33mPress CTRL+C to quit[0m
+2026-05-11 23:23:26,792 -  * Restarting with stat
+2026-05-11 23:23:30,210 -  * Debugger is active!
+2026-05-11 23:23:30,213 -  * Debugger PIN: 119-502-608
+2026-05-11 23:23:37,010 - 127.0.0.1 - - [11/May/2026 23:23:37] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:23:37,046 - 127.0.0.1 - - [11/May/2026 23:23:37] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:23:37,390 - 127.0.0.1 - - [11/May/2026 23:23:37] "GET /static/css/auth.css HTTP/1.1" 200 -
+2026-05-11 23:23:40,502 - 127.0.0.1 - - [11/May/2026 23:23:40] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-11 23:24:47,765 - 127.0.0.1 - - [11/May/2026 23:24:47] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:24:47,793 - 127.0.0.1 - - [11/May/2026 23:24:47] "GET /static/css/auth.css HTTP/1.1" 200 -
+2026-05-11 23:24:49,937 - 127.0.0.1 - - [11/May/2026 23:24:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-11 23:24:51,250 - 127.0.0.1 - - [11/May/2026 23:24:51] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-11 23:25:01,416 - Google Auth failed: invalid_client: The provided client secret is invalid.
+2026-05-11 23:25:01,419 - 127.0.0.1 - - [11/May/2026 23:25:01] "[32mGET /login/google/authorize?state=jSdmpWfjOEvc28PrQb44lriXa0DMAp&iss=https://accounts.google.com&code=4/0AeoWuM-ohiTVUlrkPjZv_bWQ2FRRqLq8c_iRjThvRMhfEySglbXWe9YM73sLSaEid7Ci4g&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=consent HTTP/1.1[0m" 302 -
+2026-05-11 23:25:01,431 - 127.0.0.1 - - [11/May/2026 23:25:01] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:25:01,571 - 127.0.0.1 - - [11/May/2026 23:25:01] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:30:04,890 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-11 23:30:04,890 - [33mPress CTRL+C to quit[0m
+2026-05-11 23:30:04,891 -  * Restarting with stat
+2026-05-11 23:30:07,775 -  * Debugger is active!
+2026-05-11 23:30:07,778 -  * Debugger PIN: 119-502-608
+2026-05-11 23:30:19,688 - 127.0.0.1 - - [11/May/2026 23:30:19] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:30:19,720 - 127.0.0.1 - - [11/May/2026 23:30:19] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:30:21,866 - 127.0.0.1 - - [11/May/2026 23:30:21] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-11 23:30:32,667 - Google Auth failed: invalid_client: The provided client secret is invalid.
+2026-05-11 23:30:32,671 - 127.0.0.1 - - [11/May/2026 23:30:32] "[32mGET /login/google/authorize?state=enSo6AZ7qQQPGtoXR4AYjs9HzslXVZ&iss=https://accounts.google.com&code=4/0AeoWuM9UV8qPnCKpS7pF1XtP_qvwvIegVGV_VSfJgmHeekKkXFwT1EpVjLtQlKieVroShA&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=consent HTTP/1.1[0m" 302 -
+2026-05-11 23:30:32,685 - 127.0.0.1 - - [11/May/2026 23:30:32] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:30:32,810 - 127.0.0.1 - - [11/May/2026 23:30:32] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:30:39,449 - 127.0.0.1 - - [11/May/2026 23:30:39] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:30:39,508 - 127.0.0.1 - - [11/May/2026 23:30:39] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:30:44,622 - 127.0.0.1 - - [11/May/2026 23:30:44] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-11 23:30:52,106 - Google Auth failed: invalid_client: The provided client secret is invalid.
+2026-05-11 23:30:52,110 - 127.0.0.1 - - [11/May/2026 23:30:52] "[32mGET /login/google/authorize?state=TTjYZOicqmP0UrD1jMRwyykJeKrrla&iss=https://accounts.google.com&code=4/0AeoWuM9hqOQI21JQzvzkAhG_j0v3A9OgvdJ_V6D0sb-qkmZz1n_fkca0oLcwI5DvmIkhPA&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=consent HTTP/1.1[0m" 302 -
+2026-05-11 23:30:52,126 - 127.0.0.1 - - [11/May/2026 23:30:52] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:30:52,235 - 127.0.0.1 - - [11/May/2026 23:30:52] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:36:20,709 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-11 23:36:20,709 - [33mPress CTRL+C to quit[0m
+2026-05-11 23:36:20,712 -  * Restarting with stat
+2026-05-11 23:36:23,908 -  * Debugger is active!
+2026-05-11 23:36:23,911 -  * Debugger PIN: 119-502-608
+2026-05-11 23:37:06,034 - 127.0.0.1 - - [11/May/2026 23:37:06] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:37:06,081 - 127.0.0.1 - - [11/May/2026 23:37:06] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:09,138 - 127.0.0.1 - - [11/May/2026 23:37:09] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:37:09,455 - 127.0.0.1 - - [11/May/2026 23:37:09] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:37:09,502 - 127.0.0.1 - - [11/May/2026 23:37:09] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:11,180 - 127.0.0.1 - - [11/May/2026 23:37:11] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-11 23:37:16,911 - 127.0.0.1 - - [11/May/2026 23:37:16] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:16,925 - 127.0.0.1 - - [11/May/2026 23:37:16] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:37:17,235 - 127.0.0.1 - - [11/May/2026 23:37:17] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:25,089 - 127.0.0.1 - - [11/May/2026 23:37:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-11 23:37:25,095 - 127.0.0.1 - - [11/May/2026 23:37:25] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:37:25,322 - 127.0.0.1 - - [11/May/2026 23:37:25] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:37:25,507 - 127.0.0.1 - - [11/May/2026 23:37:25] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:42,382 - 127.0.0.1 - - [11/May/2026 23:37:42] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2026-05-11 23:37:42,392 - 127.0.0.1 - - [11/May/2026 23:37:42] "GET /login HTTP/1.1" 200 -
+2026-05-11 23:37:42,454 - 127.0.0.1 - - [11/May/2026 23:37:42] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:42,764 - 127.0.0.1 - - [11/May/2026 23:37:42] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-11 23:37:49,975 - 127.0.0.1 - - [11/May/2026 23:37:49] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-11 23:37:50,023 - 127.0.0.1 - - [11/May/2026 23:37:50] "GET / HTTP/1.1" 200 -
+2026-05-11 23:37:50,066 - 127.0.0.1 - - [11/May/2026 23:37:50] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-05-11 23:37:50,396 - 127.0.0.1 - - [11/May/2026 23:37:50] "[36mGET /static/css/style.css?v=2 HTTP/1.1[0m" 304 -
+2026-05-11 23:37:50,473 - 127.0.0.1 - - [11/May/2026 23:37:50] "[36mGET /static/js/app.js?v=3 HTTP/1.1[0m" 304 -
+2026-05-11 23:37:50,797 - 127.0.0.1 - - [11/May/2026 23:37:50] "GET /api/logs HTTP/1.1" 200 -
+2026-05-12 11:56:39,115 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-12 11:56:39,115 - [33mPress CTRL+C to quit[0m
+2026-05-12 11:56:39,123 -  * Restarting with stat
+2026-05-12 11:56:44,069 -  * Debugger is active!
+2026-05-12 11:56:44,081 -  * Debugger PIN: 119-502-608
+2026-05-12 11:56:44,176 - 127.0.0.1 - - [12/May/2026 11:56:44] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-12 11:56:44,212 - 127.0.0.1 - - [12/May/2026 11:56:44] "GET /login?next=/ HTTP/1.1" 200 -
+2026-05-12 11:56:44,563 - 127.0.0.1 - - [12/May/2026 11:56:44] "GET /static/css/auth.css HTTP/1.1" 200 -
+2026-05-12 11:56:59,715 - 127.0.0.1 - - [12/May/2026 11:56:59] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-12 12:01:51,291 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-12 12:01:51,292 - [33mPress CTRL+C to quit[0m
+2026-05-12 12:01:51,294 -  * Restarting with stat
+2026-05-12 12:01:55,091 -  * Debugger is active!
+2026-05-12 12:01:55,095 -  * Debugger PIN: 119-502-608
+2026-05-12 12:02:00,695 - 127.0.0.1 - - [12/May/2026 12:02:00] "GET /login?next=/ HTTP/1.1" 200 -
+2026-05-12 12:02:00,837 - 127.0.0.1 - - [12/May/2026 12:02:00] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:02:10,504 - 127.0.0.1 - - [12/May/2026 12:02:10] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-12 12:02:25,274 - 127.0.0.1 - - [12/May/2026 12:02:25] "[32mGET /login/google/authorize?state=GtFa7D0egnBmZXceNfbFLWy33quZsS&iss=https://accounts.google.com&code=4/0AeoWuM9KhucWmUbsusl9lMroVy9BkO89eF9L_Hyx_EGyivx_SP2sqCntEbjZcaDZGSGJZA&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=consent HTTP/1.1[0m" 302 -
+2026-05-12 12:02:25,612 - 127.0.0.1 - - [12/May/2026 12:02:25] "GET / HTTP/1.1" 200 -
+2026-05-12 12:02:25,847 - 127.0.0.1 - - [12/May/2026 12:02:25] "GET /static/css/style.css?v=2 HTTP/1.1" 200 -
+2026-05-12 12:02:26,029 - 127.0.0.1 - - [12/May/2026 12:02:26] "GET /static/js/app.js?v=3 HTTP/1.1" 200 -
+2026-05-12 12:02:26,517 - 127.0.0.1 - - [12/May/2026 12:02:26] "GET /api/logs HTTP/1.1" 200 -
+2026-05-12 12:03:22,121 - 127.0.0.1 - - [12/May/2026 12:03:22] "POST /api/restore HTTP/1.1" 200 -
+2026-05-12 12:04:16,377 - 127.0.0.1 - - [12/May/2026 12:04:16] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-12 12:04:16,684 - 127.0.0.1 - - [12/May/2026 12:04:16] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:04:17,055 - 127.0.0.1 - - [12/May/2026 12:04:17] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:04:28,219 - Failed to send email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-83967dbcfc0sm27139373b3a.42 - gsmtp')
+2026-05-12 12:04:28,222 - 127.0.0.1 - - [12/May/2026 12:04:28] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-12 12:04:28,251 - 127.0.0.1 - - [12/May/2026 12:04:28] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:04:28,712 - 127.0.0.1 - - [12/May/2026 12:04:28] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:06:05,108 - 127.0.0.1 - - [12/May/2026 12:06:05] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-12 12:06:15,569 - 127.0.0.1 - - [12/May/2026 12:06:15] "[32mGET /login/google/authorize?state=QgVNvkexuN6Zpn86Vv2WWTNHpXeCDs&iss=https://accounts.google.com&code=4/0AeoWuM_KEgixaXRLgt3UZa1pZEutu3w8qOS1Q_8s_EDTg3AWszV4lUF9elCSOzmcD-RIDw&scope=email+profile+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email+openid&authuser=0&prompt=none HTTP/1.1[0m" 302 -
+2026-05-12 12:06:15,917 - 127.0.0.1 - - [12/May/2026 12:06:15] "GET / HTTP/1.1" 200 -
+2026-05-12 12:06:16,165 - 127.0.0.1 - - [12/May/2026 12:06:16] "[36mGET /static/css/style.css?v=2 HTTP/1.1[0m" 304 -
+2026-05-12 12:06:16,359 - 127.0.0.1 - - [12/May/2026 12:06:16] "[36mGET /static/js/app.js?v=3 HTTP/1.1[0m" 304 -
+2026-05-12 12:06:16,918 - 127.0.0.1 - - [12/May/2026 12:06:16] "GET /api/logs HTTP/1.1" 200 -
+2026-05-12 12:12:27,929 - 127.0.0.1 - - [12/May/2026 12:12:27] "GET / HTTP/1.1" 200 -
+2026-05-12 12:12:28,007 - 127.0.0.1 - - [12/May/2026 12:12:28] "GET /static/css/style.css?v=2 HTTP/1.1" 200 -
+2026-05-12 12:12:28,177 - 127.0.0.1 - - [12/May/2026 12:12:28] "GET /static/js/app.js?v=3 HTTP/1.1" 200 -
+2026-05-12 12:12:28,968 - 127.0.0.1 - - [12/May/2026 12:12:28] "GET /api/logs HTTP/1.1" 200 -
+2026-05-12 12:12:30,353 - 127.0.0.1 - - [12/May/2026 12:12:30] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-12 12:12:30,650 - 127.0.0.1 - - [12/May/2026 12:12:30] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:12:31,041 - 127.0.0.1 - - [12/May/2026 12:12:31] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:12:41,200 - Failed to send email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2baf1ec6e7dsm128140005ad.82 - gsmtp')
+2026-05-12 12:12:41,202 - 127.0.0.1 - - [12/May/2026 12:12:41] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-12 12:12:41,213 - 127.0.0.1 - - [12/May/2026 12:12:41] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:12:41,637 - 127.0.0.1 - - [12/May/2026 12:12:41] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:12:55,767 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.18.49:5000
+2026-05-12 12:12:55,767 - [33mPress CTRL+C to quit[0m
+2026-05-12 12:12:55,770 -  * Restarting with stat
+2026-05-12 12:12:59,553 -  * Debugger is active!
+2026-05-12 12:12:59,557 -  * Debugger PIN: 119-502-608
+2026-05-12 12:13:11,604 - 127.0.0.1 - - [12/May/2026 12:13:11] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:13:11,771 - 127.0.0.1 - - [12/May/2026 12:13:11] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:13:31,772 - 127.0.0.1 - - [12/May/2026 12:13:31] "[32mPOST /forgot-password HTTP/1.1[0m" 302 -
+2026-05-12 12:13:31,788 - 127.0.0.1 - - [12/May/2026 12:13:31] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:13:32,200 - 127.0.0.1 - - [12/May/2026 12:13:32] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:14:20,739 - 127.0.0.1 - - [12/May/2026 12:14:20] "GET /reset-password/ImJoYXJnYXZyZWRkeXkyM0BnbWFpbC5jb20i.agLMDw.QnVIh30FKiCYJGKky4y1M3ABQwQ HTTP/1.1" 200 -
+2026-05-12 12:14:21,043 - 127.0.0.1 - - [12/May/2026 12:14:21] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:14:34,048 - 127.0.0.1 - - [12/May/2026 12:14:34] "[32mPOST /reset-password/ImJoYXJnYXZyZWRkeXkyM0BnbWFpbC5jb20i.agLMDw.QnVIh30FKiCYJGKky4y1M3ABQwQ HTTP/1.1[0m" 302 -
+2026-05-12 12:14:34,064 - 127.0.0.1 - - [12/May/2026 12:14:34] "GET /login HTTP/1.1" 200 -
+2026-05-12 12:14:34,135 - 127.0.0.1 - - [12/May/2026 12:14:34] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+2026-05-12 12:14:44,139 - 127.0.0.1 - - [12/May/2026 12:14:44] "[32mGET /login/google HTTP/1.1[0m" 302 -
+2026-05-12 12:14:48,959 - 127.0.0.1 - - [12/May/2026 12:14:48] "[32mGET /login/google/authorize?state=FJ8Q9G9VpVTjI302bRM7jt68eut3Id&iss=https://accounts.google.com&code=4/0AeoWuM-2Q4quuvz-KnnNeoX3zx3xUgqLqhv6Dbw5wcJ4sNyyac50gw1ydnAZQVJVu80miQ&scope=email+profile+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile+openid&authuser=0&prompt=none HTTP/1.1[0m" 302 -
+2026-05-12 12:14:49,304 - 127.0.0.1 - - [12/May/2026 12:14:49] "GET / HTTP/1.1" 200 -
+2026-05-12 12:14:49,539 - 127.0.0.1 - - [12/May/2026 12:14:49] "[36mGET /static/css/style.css?v=2 HTTP/1.1[0m" 304 -
+2026-05-12 12:14:49,714 - 127.0.0.1 - - [12/May/2026 12:14:49] "[36mGET /static/js/app.js?v=3 HTTP/1.1[0m" 304 -
+2026-05-12 12:14:49,792 - 127.0.0.1 - - [12/May/2026 12:14:49] "GET /api/logs HTTP/1.1" 200 -
