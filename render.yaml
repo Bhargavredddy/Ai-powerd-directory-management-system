@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ai-file-organizer
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
+      - key: FLASK_APP
+        value: app.py
+      - key: FLASK_ENV
+        value: production
+      # Note: Add your GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, 
+      # MAIL_USERNAME, and MAIL_PASSWORD in the Render dashboard manually.

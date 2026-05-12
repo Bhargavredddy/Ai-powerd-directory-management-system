@@ -23,6 +23,17 @@ import threading
 # Load environment variables
 load_dotenv()
 
+# Download required NLTK data (for production environments like Gunicorn)
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt', quiet=True)
+
+try:
+    nltk.data.find('taggers/averaged_perceptron_tagger')
+except LookupError:
+    nltk.download('averaged_perceptron_tagger', quiet=True)
+
 app = Flask(__name__)
 app.secret_key = 'ai-file-organizer-secret-2024'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -544,16 +555,34 @@ def update_categories():
     CATEGORIES = data
     return jsonify({'success': True})
 
+@app.route('/about')
+@login_required
+def about():
+    return render_template('about.html', user=current_user)
+
+@app.route('/contact', methods=['GET', 'POST'])
+@login_required
+def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+
+        try:
+            msg = Message(
+                f"New Contact Form Submission from {name}",
+                sender=app.config['MAIL_USERNAME'],
+                recipients=["bhargavreddyy23@gmail.com"]
+            )
+            msg.body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+            mail.send(msg)
+            flash("Your message has been sent successfully!", "success")
+        except Exception as e:
+            logging.error(f"Failed to send contact email: {e}")
+            flash("Failed to send your message. Please try again later.", "error")
+        return redirect(url_for('contact'))
+        
+    return render_template('contact.html', user=current_user)
+
 if __name__ == '__main__':
-    # Download required NLTK data
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        nltk.download('punkt', quiet=True)
-    
-    try:
-        nltk.data.find('taggers/averaged_perceptron_tagger')
-    except LookupError:
-        nltk.download('averaged_perceptron_tagger', quiet=True)
-    
     app.run(debug=True, host='0.0.0.0', port=5000)
